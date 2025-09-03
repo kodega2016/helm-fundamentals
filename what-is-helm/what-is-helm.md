@@ -10,6 +10,8 @@
   - [Helm Architecture](#helm-architecture)
   - [Managing Helm Charts with cli](#managing-helm-charts-with-cli)
   - [Installing a chart](#installing-a-chart)
+  - [Uninstalling a chart](#uninstalling-a-chart)
+  - [Cleaning up the kubernetes resources](#cleaning-up-the-kubernetes-resources)
   <!--toc:end-->
 
 ## Introduction
@@ -244,3 +246,16 @@ So we do manually delete the persistent volume claims using the following comman
 ```bash
 kubectl delete pvc <pvc-name>
 ```
+
+## Cleaning up the kubernetes resources
+
+The helm uninstall command does not delete the persistent volume claims created by
+the chart.So we need to manually delete the persistent volume claims using the following
+command:
+
+```bash
+kubectl delete pvc --all # make sure you are in the correct namespace
+```
+
+In our wordpress example,after re-installing the chart we can see that new pods
+cannect to the old database and the data is still intact.
