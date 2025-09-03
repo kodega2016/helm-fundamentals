@@ -1,0 +1,3 @@
+wordpressUsername: kodega
+existingSecret: custom-wp-credentials
+replicaCount: 3

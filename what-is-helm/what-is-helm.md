@@ -12,6 +12,8 @@
   - [Installing a chart](#installing-a-chart)
   - [Uninstalling a chart](#uninstalling-a-chart)
   - [Cleaning up the kubernetes resources](#cleaning-up-the-kubernetes-resources)
+  - [Setting custom values via CLI(--set)](#setting-custom-values-via-cli-set)
+  - [Setting custom values via file(yaml)](#setting-custom-values-via-fileyaml)
   <!--toc:end-->
 
 ## Introduction
@@ -258,4 +260,56 @@ kubectl delete pvc --all # make sure you are in the correct namespace
 ```
 
 In our wordpress example,after re-installing the chart we can see that new pods
-cannect to the old database and the data is still intact.
+connect to the old database and the data is still intact.
+
+## Setting custom values via CLI(--set)
+
+We can override the default values of the chart using the --set flag
+in the helm install command.
+
+```bash
+helm install <release-name> <repo-name>/<chart-name> --set key1=value1,key2=value2
+```
+
+```bash
+helm install local-wp bitnami/wordpress \
+  --set "mariadb.auth.rootPassword=super_secret" \
+  --set "mariadb.auth.password=app_password"
+```
+
+Now, we can get the values from the release using the following command:
+
+```bash
+helm get values <release-name>
+helm get values local-wp
+```
+
+## Setting custom values via file(yaml)
+
+We can also verride the default values of the chart using a custom
+yaml configuration file.
+
+We are going to use exising password from the secrets, so first lets
+create a secret with the following command:
+
+```bash
+kubectl create secret generic custom-wp-credentials \
+  --from-literal=wordpress-password=super_secret
+```
+
+Now we need to create a custom values.yaml file with the following content:
+
+```yaml
+wordpressUsername: kodega
+existingSecret: custom-wp-credentials
+replicaCount: 3
+```
+
+After that we can install the chart using the following command:
+
+```bash
+helm install local-wp bitnami/wordpress -f values.yaml
+```
+
+This will use the existing secret for the wordpress password and set it into
+the deployment.
