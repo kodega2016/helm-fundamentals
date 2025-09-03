@@ -200,3 +200,47 @@ helm install local-wp bitnami/wordpress --version 23.1.20
 
 It will create a new release named my-wordpress and deploy the wordpress
 application on the kubernetes cluster.
+
+To get the default username and password for the wordpress application we can check
+the default values of the chart available in the artifact hub.
+
+For wordpress the default username is user and password is generated randomly
+generated and stored in the kubernetes secret.
+
+so we can get the password using the following command:
+
+```bash
+kubectl get secret local-wp-wordpress \
+  -o jsonpath="{.data.wordpress-password}" | base64 --decode
+```
+
+We can view the values from the release using the following command:
+
+```bash
+helm get values <release-name>
+helm get values <release-name> --all # to view all values including default
+```
+
+To get the metadata information about the release we can use the following command:
+
+```bash
+helm get metadata <release-name>
+helm get metadata my-wordpress
+```
+
+## Uninstalling a chart
+
+We can uninstall a chart using the following command:
+
+```bash
+helm uninstall <release-name>
+helm uninstall my-wordpress
+```
+
+It will remove all the resources except persistent volume claims created by the chart.
+
+So we do manually delete the persistent volume claims using the following command:
+
+```bash
+kubectl delete pvc <pvc-name>
+```
