@@ -7,6 +7,7 @@
   - [Why we need Helm?](#why-we-need-helm)
   - [Benifits of using Helm](#benifits-of-using-helm)
   - [Helm vs Kustomize](#helm-vs-kustomize)
+  - [Helm Architecture](#helm-architecture)
   <!--toc:end-->
 
 ## Introduction
@@ -72,3 +73,46 @@ for different environments.
 Helm is more suitable for managing complex applications with multiple components
 and dependencies,whereas Kustomize is more suitable for managing simple applications
 across different environments.
+
+## Helm Architecture
+
+**_Helm CLI_**
+It is the command line interface for helm that allows users to interact with
+the kubernetes cluster and manage the applications.It uses kubectl under the hood
+to communicate with the kubernetes cluster.
+
+We can use helm cli to perform various operations like installing,upgrading,
+releasing and rolling back applications.
+
+It renders the templates and generates the kubernetes manifest files
+and then applies them to the kubernetes cluster using kubectl.
+
+**_Helm Chart_**
+It is a package format for the heml applications that contains all the necessary
+configurations and templates required to deploy an application on kubernetes cluster.
+
+It contains:
+
+- Chart.yaml: It contains the metadata information about the chart like name,
+  version,description etc.
+
+- Values.yaml: It contains the default configuration values for the chart such as
+  replicas
+
+- Templates/: It contains the kubernetes manifest templates that are used to
+  generate the kubernetes manifest files.
+
+- Charts/: It contains the dependencies charts required by the main chart.
+
+- templates/\_helpers.tpl: It contains the helper templates that can be used
+  across the chart.
+
+Charts can be simple like single deployment or complex like multi-tier
+applications with multiple components and dependencies.
+
+**_Release_**
+Each running instance of the chart is called a release, we can have multiple
+instances of the same chart running on the same kubernetes cluster.
+
+The release is versioned,so we can easily manage different versions of the
+applications and rollbacks to previous versions if needed.
