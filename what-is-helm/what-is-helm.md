@@ -8,6 +8,8 @@
   - [Benifits of using Helm](#benifits-of-using-helm)
   - [Helm vs Kustomize](#helm-vs-kustomize)
   - [Helm Architecture](#helm-architecture)
+  - [Managing Helm Charts with cli](#managing-helm-charts-with-cli)
+  - [Installing a chart](#installing-a-chart)
   <!--toc:end-->
 
 ## Introduction
@@ -116,3 +118,85 @@ instances of the same chart running on the same kubernetes cluster.
 
 The release is versioned,so we can easily manage different versions of the
 applications and rollbacks to previous versions if needed.
+
+## Managing Helm Charts with cli
+
+We can use helm cli to manage the helm charts and releases.To
+add the helm repository we can use the following command:
+
+```bash
+helm repo add <repo-name> <repo-url>
+# install bitnami repo
+helm repo add bitnami https://charts.bitnami.com/bitnami
+```
+
+To view the available charts in the repository we can use the following command:
+
+```bash
+helm repo list
+```
+
+To update the local cache of the charts we can use the following command:
+
+```bash
+helm repo update
+```
+
+We can search the helm charts in the repository using the following command:
+
+```bash
+helm search repo <chart-name>
+helm search repo mysql
+```
+
+We can view the index of the chart using the following command:
+
+```bash
+helm show chart <repo-name>/<chart-name>
+helm show chart bitnami/mysql
+```
+
+The tag is also used for searching the chart:
+
+To list all the versions of a chart we can use the following command:
+
+```bash
+helm search repo <chart-name> --versions
+```
+
+To view the default values of a chart we can use the following command:
+
+```bash
+helm show values <repo-name>/<chart-name>
+```
+
+To remove the repository we can use the following command:
+
+```bash
+helm repo remove <repo-name>
+helm repo remove bitnami
+```
+
+## Installing a chart
+
+We can install a chart using the following command:
+
+```bash
+helm install <release-name> <repo-name>/<chart-name>
+```
+
+So, we are going to install wordpress chart from bitnami repository:
+
+```bash
+helm install my-wordpress bitnami/wordpress
+```
+
+To install the specific version of the chart we can use the following command:
+
+```bash
+helm install <release-name> <repo-name>/<chart-name> --version <chart-version>
+helm install local-wp bitnami/wordpress --version 23.1.20
+```
+
+It will create a new release named my-wordpress and deploy the wordpress
+application on the kubernetes cluster.
