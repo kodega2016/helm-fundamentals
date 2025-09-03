@@ -6,6 +6,7 @@
   - [Introduction](#introduction)
   - [Why we need Helm?](#why-we-need-helm)
   - [Benifits of using Helm](#benifits-of-using-helm)
+  - [Helm vs Kustomize](#helm-vs-kustomize)
   <!--toc:end-->
 
 ## Introduction
@@ -58,3 +59,16 @@ helm repositories,which can be easily shared and reused across teams.
 **_Versioned Deployment_**
 We also can manage different versions of our applications and rollbacks to previous
 versions if needed.
+
+## Helm vs Kustomize
+
+Helm is a package manager for kubernetes that allows users to define,install and
+upgrade applications using pre-configured templates called charts.
+
+Whereas Kustomize is a tool for customizing kubernetes configurations without
+managing templates so that we can create and manage different configurations
+for different environments.
+
+Helm is more suitable for managing complex applications with multiple components
+and dependencies,whereas Kustomize is more suitable for managing simple applications
+across different environments.
