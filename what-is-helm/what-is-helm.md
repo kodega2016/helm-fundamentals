@@ -15,6 +15,7 @@
   - [Setting custom values via CLI(--set)](#setting-custom-values-via-cli-set)
   - [Setting custom values via file(yaml)](#setting-custom-values-via-fileyaml)
   - [Upgrading Helm Release(setting new values)](#upgrading-helm-releasesetting-new-values)
+  - [Upgrading the chart version](#upgrading-the-chart-version)
   <!--toc:end-->
 
 ## Introduction
@@ -342,4 +343,13 @@ To get the value of a specific revision we can use the following command:
 ```bash
 helm get values <release-name> --revision <revision-number>
 helm get values local-wp --revision 1
+```
+
+## Upgrading the chart version
+
+we can also upgrade the chart version using the following command:
+
+```bash
+helm upgrade <release-name> <repo-name>/<chart-name> --version <chart-version>
+helm upgrade local-wp bitnami/wordpress --version 23.1.20
 ```
