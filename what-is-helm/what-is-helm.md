@@ -14,6 +14,7 @@
   - [Cleaning up the kubernetes resources](#cleaning-up-the-kubernetes-resources)
   - [Setting custom values via CLI(--set)](#setting-custom-values-via-cli-set)
   - [Setting custom values via file(yaml)](#setting-custom-values-via-fileyaml)
+  - [Upgrading Helm Release(setting new values)](#upgrading-helm-releasesetting-new-values)
   <!--toc:end-->
 
 ## Introduction
@@ -313,3 +314,32 @@ helm install local-wp bitnami/wordpress -f values.yaml
 
 This will use the existing secret for the wordpress password and set it into
 the deployment.
+
+## Upgrading Helm Release(setting new values)
+
+We can also upgrade the release version by setting new values and apply
+the changes using the following command:
+
+```bash
+helm upgrade <release-name> <repo-name>/<chart-name> --set key1=value1,key2=value2
+```
+
+```bash
+helm upgrade -f custom-values.yaml \
+  --reuse-values local-wp bitnami/wordpress \
+  --version 23.1.20
+```
+
+We also can get the history of the release using the following command:
+
+```bash
+helm history <release-name>
+helm history local-wp
+```
+
+To get the value of a specific revision we can use the following command:
+
+```bash
+helm get values <release-name> --revision <revision-number>
+helm get values local-wp --revision 1
+```

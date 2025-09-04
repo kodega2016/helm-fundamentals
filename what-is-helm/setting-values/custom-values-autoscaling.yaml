@@ -1,0 +1,12 @@
+wordpressUsername: kodega
+existingSecret: custom-wp-credentials
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 10
+
+wordpress:
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 10

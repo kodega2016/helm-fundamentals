@@ -1,3 +1,7 @@
 wordpressUsername: kodega
 existingSecret: custom-wp-credentials
-replicaCount: 3
+#replicaCount: 3
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
