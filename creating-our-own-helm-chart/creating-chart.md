@@ -1,0 +1,45 @@
+# Creating Our Own Chart
+
+<!--toc:start-->
+
+- [Creating Our Own Chart](#creating-our-own-chart)
+<!--toc:end-->
+
+We can also create our own helm chart so that we have more control over the resources
+that are created.
+
+The content of a helm chart is stored in a directory with the following structure:
+
+- Chart.yaml: contains metadata about the chart such as name,api version,app version,description
+  etc.
+
+- Values.yaml: contains the default values for the chart such as replica count,image
+  repository,image tag,service type etc.
+
+- Readme.md: contains information about the chart such as how to install it,how to
+  use it etc.
+
+- templates/: contains the Kubernetes resource templates that will be rendered using
+  the values from Values.yaml and any overrides provided during installation.
+
+- charts/: contains any dependencies that the chart may have.
+
+The templates directory contains the kubernetes resource templates as well as
+the unit tests for the chart.
+
+There is also a helpers.tpl file that contains helper functions that can be used
+to simplify the templates.
+
+```mychart/
+  Chart.yaml
+  values.yaml
+  README.md
+  templates/
+    Notes.txt
+    deployment.yaml
+    service.yaml
+    _helpers.tpl
+    tests/
+      test-connection.yaml
+  charts/
+```
