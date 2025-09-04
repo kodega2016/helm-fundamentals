@@ -16,6 +16,8 @@
   - [Setting custom values via file(yaml)](#setting-custom-values-via-fileyaml)
   - [Upgrading Helm Release(setting new values)](#upgrading-helm-releasesetting-new-values)
   - [Upgrading the chart version](#upgrading-the-chart-version)
+  - [Rollback to a previous version](#rollback-to-a-previous-version)
+  - [Helm Upgrade Configuration](#helm-upgrade-configuration)
   <!--toc:end-->
 
 ## Introduction
@@ -380,4 +382,20 @@ Now, we can rollback to the previous version using the following command:
 ```bash
 helm rollback <release-name> <revision-number>
 helm rollback local-wp 2
+```
+
+## Helm Upgrade Configuration
+
+We can also provide different configuration options while upgrading the release.
+
+```bash
+helm upgrade --help
+helm upgrade <release-name> <repo-name>/<chart-name> \
+  --set key1=value1,key2=value2 \
+  --version <chart-version> \
+  --reuse-values \
+  -f <custom-values.yaml> \
+  --atomic \ # if the upgrade fails, it will rollback to the previous version
+  --cleanup-on-fail \ # if the upgrade fails, it will delete the new resources created
+  --debug \ # to enable debug mode
 ```
