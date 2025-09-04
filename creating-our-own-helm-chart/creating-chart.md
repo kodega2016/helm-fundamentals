@@ -3,7 +3,8 @@
 <!--toc:start-->
 
 - [Creating Our Own Chart](#creating-our-own-chart)
-<!--toc:end-->
+  - [Creating our first helm chart](#creating-our-first-helm-chart)
+  <!--toc:end-->
 
 We can also create our own helm chart so that we have more control over the resources
 that are created.
@@ -43,3 +44,27 @@ to simplify the templates.
       test-connection.yaml
   charts/
 ```
+
+## Creating our first helm chart
+
+After creating a directory called nginx and creating required files, we can check
+the chart using the command:
+
+```shell
+# preview the chart
+helm template nginx
+```
+
+To lint the chart for any errors, we can use the command:
+
+```shell
+helm lint nginx
+```
+
+To install the chart, we can use the command:
+
+```shell
+helm install local-nginx nginx
+```
+
+It will create a deployment and a service.
