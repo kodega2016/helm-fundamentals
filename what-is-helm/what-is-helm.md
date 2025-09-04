@@ -353,3 +353,31 @@ we can also upgrade the chart version using the following command:
 helm upgrade <release-name> <repo-name>/<chart-name> --version <chart-version>
 helm upgrade local-wp bitnami/wordpress --version 23.1.20
 ```
+
+## Rollback to a previous version
+
+Lets explore the rollback feature of helm.
+
+First of all lets update the release with invalid image tag so that the pods
+will go into crashloopbackoff state.
+
+```bash
+helm upgrade --reuse-values -f customer-values.yaml local-wp bitnami/wordpress \
+  --set image.tag=invalid-tag
+  --version 23.1.20
+```
+
+After some time we can see that the pods are in crashloopbackoff state.
+
+Now, we can list the history of the release using the following command:
+
+```bash
+helm history local-wp
+```
+
+Now, we can rollback to the previous version using the following command:
+
+```bash
+helm rollback <release-name> <revision-number>
+helm rollback local-wp 2
+```
