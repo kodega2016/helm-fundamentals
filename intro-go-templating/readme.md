@@ -91,7 +91,7 @@ build: stable
 env: production
 public-ingress: true
 {{- else}}
-build: alpha
+build: **alpha**
 env: dev
 {{- end}}
 ```
