@@ -96,3 +96,29 @@ After that we need to do indexing of the chart using the following command.
 ```bash
 helm repo index .
 ```
+
+After that push the changes to github.
+
+Now,we can add that chart repository to any other machine using the following command.
+
+```bash
+helm repo add kodega <repo_url>
+```
+
+Lets see the list of repositories added using the following command.
+
+```bash
+helm repo list
+```
+
+Here,we seed the newly added repository.To view all the charts in that repository,
+
+```bash
+helm search repo kodega
+```
+
+After that we can run the following command to install the chart from that repository.
+
+```bash
+helm install mynginx kodega/nginx
+```
