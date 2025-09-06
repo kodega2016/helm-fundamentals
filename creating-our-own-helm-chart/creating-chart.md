@@ -5,6 +5,13 @@
 - [Creating Our Own Chart](#creating-our-own-chart)
   - [Creating our first helm chart](#creating-our-first-helm-chart)
   - [Packaging our helm chart](#packaging-our-helm-chart)
+  <!--toc:end-->
+
+<!--toc:start-->
+
+- [Creating Our Own Chart](#creating-our-own-chart)
+  - [Creating our first helm chart](#creating-our-first-helm-chart)
+  - [Packaging our helm chart](#packaging-our-helm-chart)
 
 We can also create our own helm chart so that we have more control over the resources
 that are created.
@@ -74,7 +81,7 @@ It will create a deployment and a service.
 We can package our chart configuration using the following command.
 
 ```bash
-helm package nginx
+helm package **nginx**
 ```
 
 It will create a tar file with name ngix-0.1.0.tgz.We can install
@@ -82,4 +89,10 @@ that chart using that folder with the following command.
 
 ```bash
 helm install nginx.0.1.0.tgz
+```
+
+After that we need to do indexing of the chart using the following command.
+
+```bash
+helm repo index .
 ```
