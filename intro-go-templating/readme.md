@@ -4,7 +4,7 @@
 
 - [Exploring Go Template for Helm Chart](#exploring-go-template-for-helm-chart)
   - [Introduction](#introduction)
-  <!--toc:end-->
+  - [Function in template'](#function-in-template)
 
 ## Introduction
 
@@ -36,3 +36,25 @@ To lint the configuration files,we can run the following command.
 ```bash
 helm lint .
 ```
+
+## Function in template'
+
+In go template, we can pass the function and arguments in following
+pattern.
+
+```tmpl
+name: {{upper .Release.Name}}
+description: {{replace " " "-" .Chart.Description}}
+```
+
+Here, the upper and replace are the functions which takes number of
+arguments.
+
+We can also pipe the result of one function to another usign `|` symbol.
+
+```yaml
+name: {{replace " " "-" .Release.Name| upper}}
+```
+
+It will first replace the " " with "-" and change the words to
+uppercase.

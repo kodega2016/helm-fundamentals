@@ -1,8 +1,9 @@
 # this is just a comment
 {{- /* this a golang comment and i will not available in yaml */}}
+{{- /* function_name arg1 arg2 */}}
 test: {{ .Values.test }}
 labels:
-    app: {{.Release.Name}}
+    app: {{replace "-" "_" .Release.Name | upper }}
     chart: {{.Chart.Name}}
     description: {{.Chart.Description}}
     appVersion: {{.Chart.AppVersion}}
