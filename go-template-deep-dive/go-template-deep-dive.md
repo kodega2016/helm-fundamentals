@@ -68,3 +68,19 @@ To use the default value,we can use the `default` function.
 ```
 
 ## Using range to iterate over list
+To iterate over the list of values, we can use range.
+
+```yaml
+{{- range $idx,$svc:=(.Values.services | default list) }}
+```
+
+Then we can access `$idx` and `$svc` in the template,the `.` scope
+is altered by the range operator so we need to use `$` for the top
+level context.
+
+```yaml
+metadata:
+  name: {{include "templating-deep-dive.fullname" $}}-svc-{{$idx}}
+  labels:
+    {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
+```
