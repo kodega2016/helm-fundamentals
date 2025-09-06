@@ -5,6 +5,7 @@
 - [Exploring Go Template for Helm Chart](#exploring-go-template-for-helm-chart)
   - [Introduction](#introduction)
   - [Function in template'](#function-in-template)
+  - [Conditional in template](#conditional-in-template)
 
 ## Introduction
 
@@ -58,3 +59,39 @@ name: {{replace " " "-" .Release.Name| upper}}
 
 It will first replace the " " with "-" and change the words to
 uppercase.
+
+## Conditional in template
+
+We can also write conditional logic to go template with the
+following syntax.
+
+```yaml
+{{if eq .Values.env "production" }}
+build: stable
+env: production
+public-ingress: true
+{{else}}
+build: alpha
+env: dev
+{{end}}
+```
+
+Here,when we try to output the template with the following command.
+
+```bash
+helm template .
+```
+
+We found that there is a extra space on each conditional state.
+To remove that we can use `-` operator.
+
+```yaml
+{{- if eq .Values.env "production" }}
+build: stable
+env: production
+public-ingress: true
+{{- else}}
+build: alpha
+env: dev
+{{- end}}
+```

@@ -7,3 +7,10 @@ labels:
     chart: {{.Chart.Name}}
     description: {{.Chart.Description}}
     appVersion: {{.Chart.AppVersion}}
+    {{- if eq .Values.env "production"}}
+    build: stable
+    public-ingress: true
+    {{- else}}
+    build: alpha
+    env: dev
+    {{- end}}
