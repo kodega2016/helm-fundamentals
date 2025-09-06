@@ -25,3 +25,19 @@ And dictonary with:
 ```go
 my-dict: {{dict "name" "Khadga" "age" 28 "role" "Softare Engineer" "skills" (dict "flutter" "10" "golang" "6") | toYaml | nindent 2}}
 ```
+
+We can define helpers functions to make our templates more
+readable and reusable.
+
+```go
+{{- define "myHelper" -}}
+  {{- /* Your helper logic here */ -}}
+{{- end -}}
+{{- template "myHelper" . -}}
+```
+
+Then we can use that helper in our main template.
+
+```yaml
+{ { include "myHelper" . } }
+```

@@ -1,8 +1,0 @@
-list: {{list 1 2 3}}
-skill: {{list "flutter" "docker" "kubernetes" | toYaml | nindent 2}}
-
-
-list:
-  values: {{list 1 2 3 | toYaml | nindent 4}}
-
-my-dict: {{dict "name" "Khadga" "age" 28 "role" "Softare Engineer" "skills" (dict "flutter" "10" "golang" "6") | toYaml | nindent 2}}

@@ -1,2 +1,30 @@
 test: Explore golang for helm
 env: dev
+
+# image,name and tag
+# serviceType
+# replicaCount
+# resources
+
+replicaCount: 2
+image:
+  name: nginx
+  tag: "1.27.0"
+
+containerPorts:
+  http:
+    port: 80
+
+resources:
+  limits:
+    cpu: 200m
+    memory: 265Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+service:
+  enabled: false
+  type: ClusterIP
+  port: 80
+  targetPort: 80
