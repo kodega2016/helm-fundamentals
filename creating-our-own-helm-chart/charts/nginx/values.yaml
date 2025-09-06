@@ -21,6 +21,7 @@ resources:
     memory: 128Mi
 
 service:
+  enabled: false
   type: ClusterIP
   port: 80
   targetPort: 80
