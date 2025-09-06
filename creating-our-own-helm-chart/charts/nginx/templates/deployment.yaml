@@ -5,6 +5,7 @@ metadata:
   labels:
     app: nginx
 spec:
+  replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
         app: nginx
@@ -14,7 +15,14 @@ spec:
         app: nginx
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.27.0
+      - name: {{.Values.image.name}}
+        image: {{.Values.image.name}}:{{.Values.image.tag}}
         ports:
-        - containerPort: 80
+        - containerPort: {{.Values.containerPorts.http.port}}
+        resources:
+          requests: 
+            cpu: {{.Values.resources.requests.cpu}}
+            memory: {{.Values.resources.requests.memory}}
+          limits: 
+            cpu: {{.Values.resources.limits.cpu}}
+            memory: {{.Values.resources.limits.memory}}
