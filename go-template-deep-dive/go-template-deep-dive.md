@@ -6,6 +6,7 @@
   - [Introduction](#introduction)
   - [Conditional statement with if else](#conditional-statement-with-if-else)
   - [Variables in template](#variables-in-template)
+  - [Using range to iterate over list](#using-range-to-iterate-over-list)
 
 ## Introduction
 
@@ -65,3 +66,5 @@ To use the default value,we can use the `default` function.
 ```yaml
 {{- .Values.customName |  default $fullName| trunc 63 | trimSuffix "-" }}
 ```
+
+## Using range to iterate over list

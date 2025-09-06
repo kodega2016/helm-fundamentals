@@ -34,8 +34,11 @@ resources:
     memory: 128Mi
 
 ## @param Service configuration
-service:
-  enabled: true
-  type: ClusterIP
-  port: 80
-  targetPort: 80
+services:
+  - type: ClusterIP
+    port: 80
+    targetPort: 80
+    
+  - type: NodePort
+    port: 80
+    targetPort: 80
