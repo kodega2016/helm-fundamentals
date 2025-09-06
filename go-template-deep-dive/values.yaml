@@ -1,20 +1,30 @@
 test: Explore golang for helm
 env: dev
 
+
 # image,name and tag
 # serviceType
 # replicaCount
 # resources
 
+## customResource name for the deployment
+customName: ""
+## Defaults to {{.Release.Name}}-{{.Chart.Name}}
+
+## @param Replica count for the number of pods to be created
 replicaCount: 2
+
+## @param Image details for the container to be deployed
 image:
   name: nginx
   tag: "1.27.0"
 
+## @param Container ports to be exposed
 containerPorts:
   http:
     port: 80
 
+## @param Resource requests and limits for the container
 resources:
   limits:
     cpu: 200m
@@ -23,8 +33,9 @@ resources:
     cpu: 100m
     memory: 128Mi
 
+## @param Service configuration
 service:
-  enabled: false
+  enabled: true
   type: ClusterIP
   port: 80
   targetPort: 80

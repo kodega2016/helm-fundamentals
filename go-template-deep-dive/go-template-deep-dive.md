@@ -5,6 +5,7 @@
 - [Go Template Deep Dive](#go-template-deep-dive)
   - [Introduction](#introduction)
   - [Conditional statement with if else](#conditional-statement-with-if-else)
+  - [Variables in template](#variables-in-template)
 
 ## Introduction
 
@@ -48,4 +49,19 @@ We can have conditional statement with the following tempate.
 
 ```yaml
 replicas: {{ if eq .Values.env "production" -}}5{{- else -}}1{{- end }}
+```
+
+## Variables in template
+
+We can define variable in template using `$` operator.
+
+```yaml
+{{- $fullName := printf "%s-%s" .Release.Name .Chart.Name -}}
+name: {{ $fullName | trunc 63 | trimSuffix "-" }}
+```
+
+To use the default value,we can use the `default` function.
+
+```yaml
+{{- .Values.customName |  default $fullName| trunc 63 | trimSuffix "-" }}
 ```
