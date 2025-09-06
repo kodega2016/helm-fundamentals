@@ -1,0 +1,8 @@
+# this is just a comment
+{{- /* this a golang comment and i will not available in yaml */}}
+test: {{ .Values.test }}
+labels:
+    app: {{.Release.Name}}
+    chart: {{.Chart.Name}}
+    description: {{.Chart.Description}}
+    appVersion: {{.Chart.AppVersion}}
