@@ -6,4 +6,5 @@
 {{- define "templating-deep-dive.labelSelectors" -}}
 app: {{.Chart.Name}}
 release: {{.Release.Name}}
+managedBy: {{.Release.Service}}
 {{- end -}}

@@ -7,10 +7,12 @@ metadata:
 spec:
   replicas: {{.Values.replicaCount}}
   selector:
-    matchLabels: {{include "templating-deep-dive.labelSelectors" . | nindent 6}}
+    matchLabels: 
+      {{- include "templating-deep-dive.labelSelectors" . | nindent 6}}
   template:
     metadata:
-      labels: {{include "templating-deep-dive.labelSelectors" . | nindent 8}}
+      labels: 
+        {{- include "templating-deep-dive.labelSelectors" . | nindent 8}}
     spec:
       containers:
       - name: {{.Values.image.name}}
