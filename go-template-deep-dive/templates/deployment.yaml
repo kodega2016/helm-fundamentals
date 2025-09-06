@@ -1,11 +1,10 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{include "templating-deep-dive.fullname" .}}-deploy
-  labels: {{include "templating-deep-dive.labelSelectors" . | nindent 4}}
+  name: {{ include "templating-deep-dive.fullname" .}}-deploy
+  labels: {{ include "templating-deep-dive.labelSelectors" . | nindent 4}}
 spec:
-  replicas: {{.Values.replicaCount}}
+  replicas: {{ if eq .Values.env "production" -}}5{{- else -}}1{{- end }}
   selector:
     matchLabels: 
       {{- include "templating-deep-dive.labelSelectors" . | nindent 6}}
@@ -17,8 +16,10 @@ spec:
       containers:
       - name: {{.Values.image.name}}
         image: {{.Values.image.name}}:{{.Values.image.tag}}
+        {{- if .Values.service.enabled}}
         ports:
         - containerPort: {{.Values.containerPorts.http.port}}
+        {{- end }}
         resources:
           requests: 
             cpu: {{.Values.resources.requests.cpu}}

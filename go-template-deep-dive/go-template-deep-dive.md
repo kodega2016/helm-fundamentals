@@ -4,7 +4,7 @@
 
 - [Go Template Deep Dive](#go-template-deep-dive)
   - [Introduction](#introduction)
-  <!--toc:end-->
+  - [Conditional statement with if else](#conditional-statement-with-if-else)
 
 ## Introduction
 
@@ -40,4 +40,12 @@ Then we can use that helper in our main template.
 
 ```yaml
 { { include "myHelper" . } }
+```
+
+## Conditional statement with if else
+
+We can have conditional statement with the following tempate.
+
+```yaml
+replicas: {{ if eq .Values.env "production" -}}5{{- else -}}1{{- end }}
 ```

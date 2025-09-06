@@ -1,0 +1,17 @@
+{{- if .Values.service.enabled}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{include "templating-deep-dive.fullname" .}}-svc
+  labels:
+    {{- include "templating-deep-dive.labelSelectors" . | nindent 4}}
+spec:
+  type: {{.Values.service.type}}
+  selector:
+    {{- include "templating-deep-dive.labelSelectors" . | nindent 4}}
+  ports:
+    - name: nginx
+      protocol: TCP
+      port: {{.Values.service.port}}
+      targetPort: {{.Values.service.targetPort}}
+{{- end}}
