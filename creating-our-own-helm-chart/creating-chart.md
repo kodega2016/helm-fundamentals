@@ -122,3 +122,14 @@ After that we can run the following command to install the chart from that repos
 ```bash
 helm install mynginx kodega/nginx
 ```
+
+## Leveraging the Helm CLI to Manage Charts
+
+We can use the Helm CLI to manage our charts effectively. Here are some useful commands:
+
+```bash
+helm create <chart-name>  # Create a new Helm chart
+```
+
+It will create a new directory with the specified chart name and populate it with
+the necessary files and directories.
