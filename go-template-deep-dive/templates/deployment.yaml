@@ -1,3 +1,8 @@
+{{- if and .Values.securityContext .Values.securityContext.enabled -}}
+{{- $_:=required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser -}}
+{{- $_:=required "securityContext.fsGroup is required when securityContext is enabled" .Values.securityContext.fsGroup -}}
+{{- end -}}
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,14 +21,14 @@ spec:
       containers:
       - name: {{.Values.image.name}}
         image: {{.Values.image.name}}:{{.Values.image.tag}}
-        {{- with .Values.securityContext | default dict }}
-        {{- if and (hasKey . "enabled") .enabled}}
+        {{- if hasKey .Values "securityContext" }}
+        {{- if .Values.securityContext.enabled }}
         securityContext:
-          runAsUser: {{.runAsUser}}
-          fsGroup: {{.fsGroup}}
-        {{- end}}
+          runAsUser: {{required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser}}
+          fsGroup: {{.Values.securityContext.fsGroup}}
         {{- end }}
-        {{- if .Values.services| default dict | len }}
+        {{- end }}
+        {{- if hasKey .Values "services" }}
         ports:
         - containerPort: {{.Values.containerPorts.http.port}}
         {{- end }}

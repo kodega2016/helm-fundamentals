@@ -9,6 +9,7 @@
   - [Using range to iterate over list](#using-range-to-iterate-over-list)
   - [Using range to iterate over map](#using-range-to-iterate-over-map)
   - [using `with` blocks](#using-with-blocks)
+  - [Validation functions](#validation-functions)
 
 ## Introduction
 
@@ -147,3 +148,22 @@ securityContext:
 
 Here, the context is changed to `.Values.securityContext`, so we can
 access its properties directly using `.`.
+
+## Validation functions
+
+we can use the `required` function to validate if a value is set or
+not.If the value is not set,it will throw an error with the provided
+message.
+
+```yaml
+{{- if and .Values.securityContext .Values.securityContext.enabled -}}
+{{- $_:=required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser -}}
+{{- $_:=required "securityContext.fsGroup is required when securityContext is enabled" .Values.securityContext.fsGroup -}}
+{{- end -}}
+```
+
+We can also use that validation inline.
+
+```yaml
+runAsUser: {{required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser}}
+``` 
