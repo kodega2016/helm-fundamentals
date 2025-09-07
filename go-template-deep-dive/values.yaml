@@ -34,11 +34,23 @@ resources:
     memory: 128Mi
 
 ## @param Service configuration
+# services:
+#   - type: ClusterIP
+#     port: 80
+#     targetPort: 80
+    
+#   - type: NodePort
+#     port: 80
+#     targetPort: 80
+
+
 services:
-  - type: ClusterIP
+  svc1:
+    type: ClusterIP
     port: 80
     targetPort: 80
-    
-  - type: NodePort
+
+  svc2:
+    type: NodePort
     port: 80
     targetPort: 80

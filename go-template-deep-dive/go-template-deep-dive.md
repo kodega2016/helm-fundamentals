@@ -7,6 +7,7 @@
   - [Conditional statement with if else](#conditional-statement-with-if-else)
   - [Variables in template](#variables-in-template)
   - [Using range to iterate over list](#using-range-to-iterate-over-list)
+  - [Using range to iterate over map](#using-range-to-iterate-over-map)
 
 ## Introduction
 
@@ -84,3 +85,25 @@ metadata:
   labels:
     {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
 ```
+
+## Using range to iterate over map
+
+We also can iterate over map and access its properties.
+```yaml
+services:
+  svc1:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+
+  svc2:
+    type: NodePort
+    port: 80
+    targetPort: 80
+```
+
+```yaml
+{{- range $key,$svc:=(.Values.services | default list) }}
+metadata:
+  name: {{include "templating-deep-dive.fullname" $}}-{{$key}}
+{{- end}}
