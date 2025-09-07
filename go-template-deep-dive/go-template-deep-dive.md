@@ -107,3 +107,25 @@ services:
 metadata:
   name: {{include "templating-deep-dive.fullname" $}}-{{$key}}
 {{- end}}
+
+
+## Understanding the `.` operator
+
+
+The `.` operator is used to get the values from its context.So
+if we are into global context then the . will return global 
+values.
+
+```yaml
+.Values.Name
+```
+
+But if we are in the context of the dict,then we get the value
+of that key-pair.
+
+```yaml
+.type
+.port
+```
+
+If we want to access the global context value,then we can use `$`.

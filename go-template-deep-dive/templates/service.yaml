@@ -27,12 +27,12 @@ metadata:
   labels:
     {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
 spec:
-  type: {{$svc.type}}
+  type: {{.type}}
   selector:
     {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
   ports:
     - name: nginx
       protocol: TCP
-      port: {{$svc.port}}
-      targetPort: {{$svc.targetPort}}
+      port: {{.port}}
+      targetPort: {{.targetPort}}
 {{- end}}
