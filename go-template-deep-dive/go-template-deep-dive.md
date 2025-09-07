@@ -8,6 +8,7 @@
   - [Variables in template](#variables-in-template)
   - [Using range to iterate over list](#using-range-to-iterate-over-list)
   - [Using range to iterate over map](#using-range-to-iterate-over-map)
+  - [using `with` blocks](#using-with-blocks)
 
 ## Introduction
 
@@ -129,3 +130,20 @@ of that key-pair.
 ```
 
 If we want to access the global context value,then we can use `$`.
+
+## using `with` blocks
+
+We can use the `with` block to change the context to a specific
+value.So we can avoid repeating the same value multiple times.
+
+```yaml
+{{- with .Values.securityContext -}}
+
+securityContext:
+  runAsUser: {{.runAsUser}}
+  fsGroup: {{.fsGroup}}
+{{- end -}}
+```
+
+Here, the context is changed to `.Values.securityContext`, so we can
+access its properties directly using `.`.

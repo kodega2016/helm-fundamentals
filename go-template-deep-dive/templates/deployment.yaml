@@ -16,7 +16,14 @@ spec:
       containers:
       - name: {{.Values.image.name}}
         image: {{.Values.image.name}}:{{.Values.image.tag}}
-        {{- if .Values.services | default list | len}}
+        {{- with .Values.securityContext | default dict }}
+        {{- if and (hasKey . "enabled") .enabled}}
+        securityContext:
+          runAsUser: {{.runAsUser}}
+          fsGroup: {{.fsGroup}}
+        {{- end}}
+        {{- end }}
+        {{- if .Values.services| default dict | len }}
         ports:
         - containerPort: {{.Values.containerPorts.http.port}}
         {{- end }}

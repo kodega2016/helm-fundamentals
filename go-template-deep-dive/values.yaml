@@ -43,6 +43,16 @@ resources:
 #     port: 80
 #     targetPort: 80
 
+## Settings for container security context
+# @param securityContext for the container
+# @param securityContext.enabled Enable/Disable security context for the container
+# @param securityContext.runAsUser User ID to run the container
+# @param securityContext.runAsGroup Group ID to run the container
+
+securityContext:
+  enabled: true
+  runAsUser: 1000
+  fsGroup: 2000
 
 services:
   svc1:
