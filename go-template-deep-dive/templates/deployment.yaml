@@ -1,8 +1,3 @@
-{{- if and .Values.securityContext .Values.securityContext.enabled -}}
-{{- $_:=required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser -}}
-{{- $_:=required "securityContext.fsGroup is required when securityContext is enabled" .Values.securityContext.fsGroup -}}
-{{- end -}}
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:

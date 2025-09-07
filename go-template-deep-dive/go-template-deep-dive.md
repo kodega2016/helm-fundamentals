@@ -166,4 +166,20 @@ We can also use that validation inline.
 
 ```yaml
 runAsUser: {{required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser}}
-``` 
+```
+
+We can also put the validation logic into a separate file `validation.yaml`.
+
+```yaml
+{{- if and .Values.securityContext .Values.securityContext.enabled -}}
+{{- $_:=required "securityContext.runAsUser is required when securityContext is enabled" .Values.securityContext.runAsUser -}}
+{{- $_:=required "securityContext.fsGroup is required when securityContext is enabled" .Values.securityContext.fsGroup -}}
+{{- end -}}
+```
+
+We can use `fail` function to always block the execution with the provided
+message.
+
+```yaml
+{{- fail "I will always block the execution." -}}
+```
