@@ -9,10 +9,9 @@ release: {{.Release.Name}}
 managedBy: {{.Release.Service}}
 {{- end -}}
 
-{{- define "templating-deep-dive.portRange" -}}
-{{- $sanitizePort:=int . -}}
+{{- define "templating-deep-dive.service" -}}
+{{- $sanitizePort:=int .port -}}
 {{- if or (lt $sanitizePort 1) (gt $sanitizePort 65535) -}}
 {{- fail "errors:port must be between 1 and 65535" -}}
 {{- end -}}
-{{- . }}
 {{- end -}}

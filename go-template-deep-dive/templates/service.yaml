@@ -1,24 +1,5 @@
-# {{- range $idx,$svc:=(.Values.services | default list) }}
-# ---
-# apiVersion: v1
-# kind: Service
-# metadata:
-#   name: {{include "templating-deep-dive.fullname" $}}-svc-{{$idx}}
-#   labels:
-#     {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
-# spec:
-#   type: {{$svc.type}}
-#   selector:
-#     {{- include "templating-deep-dive.labelSelectors" $ | nindent 4}}
-#   ports:
-#     - name: nginx
-#       protocol: TCP
-#       port: {{$svc.port}}
-#       targetPort: {{$svc.targetPort}}
-# {{- end}}
-
-
 {{- range $key,$svc:=(.Values.services | default list) }}
+{{ include "templating-deep-dive.service" $svc}}
 ---
 apiVersion: v1
 kind: Service
@@ -33,6 +14,6 @@ spec:
   ports:
     - name: nginx
       protocol: TCP
-      port: {{ include "templating-deep-dive.portRange" .port}}
+      port: {{.port}}
       targetPort: {{.targetPort}}
 {{- end}}
