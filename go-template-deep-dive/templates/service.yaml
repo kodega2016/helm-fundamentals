@@ -33,6 +33,6 @@ spec:
   ports:
     - name: nginx
       protocol: TCP
-      port: {{.port}}
+      port: {{ include "templating-deep-dive.portRange" .port}}
       targetPort: {{.targetPort}}
 {{- end}}
