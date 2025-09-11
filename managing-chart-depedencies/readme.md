@@ -5,6 +5,7 @@
   - [Sent value from parent chart to subchart](#sent-value-from-parent-chart-to-subchart)
   - [Global Values](#global-values)
   - [Including Names from subchart to parent chart](#including-names-from-subchart-to-parent-chart)
+  - [Conditionally include dependencies](#conditionally-include-dependencies)
 
 ## Introduction
 
@@ -110,4 +111,38 @@ We can override the name of the subchart using the `nameOverride` key in the `va
 
 ```yaml
 nameOverride: "This is from the subchart"
+```
+
+## Conditionally include dependencies
+We can conditionally include dependencies in the `Chart.yaml` file using the `condition` key.
+
+```yaml
+  - name: postgresql    
+    version: "16.7.27"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: postgresql.enabled
+```
+
+Then in the `values.yaml` file of the parent chart we can enable or disable the dependency like this.
+
+```yaml
+postgresql:
+  enabled: false
+```
+
+We can also enable/disable using the tags key.
+
+```yaml
+  - name: postgresql    
+    version: "16.7.27"
+    repository: "https://charts.bitnami.com/bitnami"
+    tags:
+      - database
+```
+
+Then in the `values.yaml` file of the parent chart we can enable or disable the dependency like this.
+
+```yaml
+tags:
+  database: false
 ```
