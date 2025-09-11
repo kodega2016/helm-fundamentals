@@ -4,6 +4,7 @@
   - [Introduction](#introduction)
   - [Sent value from parent chart to subchart](#sent-value-from-parent-chart-to-subchart)
   - [Global Values](#global-values)
+  - [Including Names from subchart to parent chart](#including-names-from-subchart-to-parent-chart)
 
 ## Introduction
 
@@ -86,4 +87,27 @@ using the `global` key in the `values.yaml` file of the parent chart.
 ```yaml
 global:
   defaultStorageClass: my-custom-storage-class
+```
+
+And it the templates of the subchart we can access the global value like this.
+
+```yaml
+{{ .Values.global.defaultStorageClass }}
+```
+
+## Including Names from subchart to parent chart
+
+We can include the names from the subchart to the parent chart using the
+`include` function in the templates of the parent chart.
+
+```yaml
+{{ include "demo-subchart.fullname" . }}
+```
+
+Here, the context `.` is passed to the subchart so that it can access the values from the parent chart as well as its own values.
+
+We can override the name of the subchart using the `nameOverride` key in the `values.yaml` file of the subchart.
+
+```yaml
+nameOverride: "This is from the subchart"
 ```

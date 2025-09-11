@@ -1,1 +1,2 @@
 customValue: "this is custom value"
+nameOverride: "This is from the subchart"
