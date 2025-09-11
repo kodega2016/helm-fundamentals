@@ -125,3 +125,6 @@ affinity: {}
 
 demo-subchart:
   customValue: "this is value sent from the parent chart"
+
+global:
+  defaultStorageClass: my-custom-storage-class

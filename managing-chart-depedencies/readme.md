@@ -2,6 +2,8 @@
 
 - [Managing Chart Dependencies](#managing-chart-dependencies)
   - [Introduction](#introduction)
+  - [Sent value from parent chart to subchart](#sent-value-from-parent-chart-to-subchart)
+  - [Global Values](#global-values)
 
 ## Introduction
 
@@ -56,3 +58,32 @@ them using the `helm dependency build` command.
 
 It will download the dependencies with the versions specified in the
 `Chart.lock` file.
+
+We can list the dependencies using the following command.
+
+```bash
+helm dependency list
+```
+
+## Sent value from parent chart to subchart
+
+We can send values from the parent chart to the subchart using the
+`values.yaml` file of the parent chart.
+
+For example if we have a subchart named `demo-subchart` and we want to
+pass the value `customValue` to the subchart we can do it like this.
+
+```yaml
+demo-subchart:
+  customValue: "This value is sent from the parent chart"
+```
+
+## Global Values
+
+We also can define global values that can be accessed by all the subcharts
+using the `global` key in the `values.yaml` file of the parent chart.
+
+```yaml
+global:
+  defaultStorageClass: my-custom-storage-class
+```
