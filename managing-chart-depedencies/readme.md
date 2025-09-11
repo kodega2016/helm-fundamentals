@@ -45,3 +45,14 @@ helm dependency build <chart-directory>
 ```
 
 It will build the dependencies and place them in the `charts/` directory.
+
+So after running the dependency update or build command we can see there
+is a `charts/` directory created in the chart directory with the
+dependencies and a `Chart.lock` file created with the dependencies
+information.
+
+If we remove the files in the `charts/` directory and then we can re-add
+them using the `helm dependency build` command.
+
+It will download the dependencies with the versions specified in the
+`Chart.lock` file.
