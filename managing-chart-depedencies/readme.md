@@ -1,11 +1,15 @@
 # Managing Chart Dependencies
 
+<!--toc:start-->
+
 - [Managing Chart Dependencies](#managing-chart-dependencies)
   - [Introduction](#introduction)
   - [Sent value from parent chart to subchart](#sent-value-from-parent-chart-to-subchart)
   - [Global Values](#global-values)
   - [Including Names from subchart to parent chart](#including-names-from-subchart-to-parent-chart)
   - [Conditionally include dependencies](#conditionally-include-dependencies)
+  - [Postgres Deployment](#postgres-deployment)
+  <!--toc:end-->
 
 ## Introduction
 
@@ -93,7 +97,7 @@ global:
 And it the templates of the subchart we can access the global value like this.
 
 ```yaml
-{{ .Values.global.defaultStorageClass }}
+{ { .Values.global.defaultStorageClass } }
 ```
 
 ## Including Names from subchart to parent chart
@@ -102,28 +106,33 @@ We can include the names from the subchart to the parent chart using the
 `include` function in the templates of the parent chart.
 
 ```yaml
-{{ include "demo-subchart.fullname" . }}
+{ { include "demo-subchart.fullname" . } }
 ```
 
-Here, the context `.` is passed to the subchart so that it can access the values from the parent chart as well as its own values.
+Here, the context `.` is passed to the subchart so that it can access the values from
+the parent chart as well as its own values.
 
-We can override the name of the subchart using the `nameOverride` key in the `values.yaml` file of the subchart.
+We can override the name of the subchart using the `nameOverride` key in the `values.
+yaml` file of the subchart.
 
 ```yaml
 nameOverride: "This is from the subchart"
 ```
 
 ## Conditionally include dependencies
-We can conditionally include dependencies in the `Chart.yaml` file using the `condition` key.
+
+We can conditionally include dependencies in the `Chart.yaml` file using the
+`condition` key.
 
 ```yaml
-  - name: postgresql    
-    version: "16.7.27"
-    repository: "https://charts.bitnami.com/bitnami"
-    condition: postgresql.enabled
+- name: postgresql
+  version: "16.7.27"
+  repository: "https://charts.bitnami.com/bitnami"
+  condition: postgresql.enabled
 ```
 
-Then in the `values.yaml` file of the parent chart we can enable or disable the dependency like this.
+Then in the `values.yaml` file of the parent chart we can enable or disable the
+dependency like this.
 
 ```yaml
 postgresql:
@@ -133,16 +142,26 @@ postgresql:
 We can also enable/disable using the tags key.
 
 ```yaml
-  - name: postgresql    
-    version: "16.7.27"
-    repository: "https://charts.bitnami.com/bitnami"
-    tags:
-      - database
+- name: postgresql
+  version: "16.7.27"
+  repository: "https://charts.bitnami.com/bitnami"
+  tags:
+    - database
 ```
 
-Then in the `values.yaml` file of the parent chart we can enable or disable the dependency like this.
+Then in the `values.yaml` file of the parent chart we can enable or disable the
+dependency like this.
 
 ```yaml
 tags:
   database: false
+```
+
+## Postgres Deployment
+
+We need to create a secret for the postgres environment variables.
+
+```bash
+kubectl create secret generic postgres-creds \
+--from-env-file .env
 ```

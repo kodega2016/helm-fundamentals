@@ -38,7 +38,7 @@ podAnnotations: {}
 # For more information checkout: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
 podLabels: {}
 
-podSecurityContext: 
+podSecurityContext:
   fsGroup: 2000
 
 securityContext: {}
@@ -73,7 +73,7 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: 
+resources:
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -121,16 +121,32 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+# demo-subchart:
+#   customValue: "this is value sent from the parent chart"
+#
 
+#
+# # postgresql:
+# #   enabled: false
+#
+# tags:
+#   database: true
 
-demo-subchart:
-  customValue: "this is value sent from the parent chart"
-
-global:
-  defaultStorageClass: my-custom-storage-class
-
-# postgresql:
-#   enabled: false
-
-tags:
-  database: true
+postgresql:
+  # primary:
+  #   persistence:
+  #     storageClass: ""
+  #   extraVolumes:
+  #     - name: run-postgresql
+  #       emptyDir: {}
+  #   extraVolumeMounts:
+  #     - name: run-postgresql
+  #       mountPath: /var/run/postgresql
+  auth:
+    usePasswordFiles: false
+    username: config_store_user
+    database: config_store_db
+    existingSecret: postgres-creds
+    secretKeys:
+      userPasswordKey: password
+  fullnameOverride: postgresql-db
