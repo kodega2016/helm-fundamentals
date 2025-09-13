@@ -3,7 +3,9 @@
 <!--toc:start-->
 
 - [Accessing the files](#accessing-the-files)
-<!--toc:end-->
+  - [Accessing files using Glob](#accessing-files-using-glob)
+  - [Helm Hooks](#helm-hooks)
+  <!--toc:end-->
 
 We can acess the files in the `files` directory using
 the `.Files.Get` function.
@@ -30,3 +32,43 @@ in a directory.
 {{ $file.Data | indent 4 }}
 {{- end -}}
 ```
+
+## Helm Hooks
+
+We have several helm hooks that we can use to run tasks at different stages.
+They are:
+
+- pre-install/post-install
+- pre-delete/post-delete
+- pre-upgrade/post-upgrade
+- pre-rollback/post-rollback
+- test
+
+Hooks are defined in the metadata of a resource using the `helm.sh/hook` annotation.
+
+```yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{ .Release.Name }}-my-job"
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+    "helm.sh/hook-delete-policy": hook-succeeded
+spec:
+  template:
+    spec:
+      containers:
+        - name: my-job
+          image: busybox
+          command: ["sh", "-c", "echo Hello, Kubernetes! && sleep 30"]
+      restartPolicy: Never
+```
+
+Here, the job will run after the chart is installed or upgraded.
+The `helm.sh/hook-weight` annotation is used to specify the order in which
+the hooks are executed. Lower weights are executed first.
+
+The `helm.sh/hook-delete-policy` annotation is used to specify when the hook
+resource are deleted.The default value is `before-hook-creation`, which means
+that the hook resource will be deleted before a new hook resource is created.
