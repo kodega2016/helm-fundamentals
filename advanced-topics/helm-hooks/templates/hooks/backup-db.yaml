@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "helm-hooks.fullname" . }}
+  name: {{ include "helm-hooks.fullname" . }}-backup-job
   labels:
     {{- include "helm-hooks.labels" . | nindent 4 }}
   annotations:
@@ -13,7 +13,30 @@ spec:
   template:
     metadata:
       labels:
-        {{- include "helm-hooks.labels" . | nindent 8 }}
+        {{- include "helm-hooks.labels" . | nindent 8 }}-backup-db
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: backup
+          image: alpine:3.12
+          command: ["/bin/sh","-c","echo Backing up database...; sleep 10; echo Backup complete."]
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ include "helm-hooks.fullname" . }}-additional-operations
+  labels:
+    {{- include "helm-hooks.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": pre-upgrade,pre-delete,pre-rollback
+    "helm.sh/hook-weight": "3"
+    "helm.sh/hook-delete-policy": before-hook-creation,hook-succeeded
+spec:
+  backoffLimit: 2
+  template:
+    metadata:
+      labels:
+        {{- include "helm-hooks.labels" . | nindent 8 }}    
     spec:
       restartPolicy: Never
       containers:
