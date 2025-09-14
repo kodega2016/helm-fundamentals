@@ -5,6 +5,7 @@
 - [Accessing the files](#accessing-the-files)
   - [Accessing files using Glob](#accessing-files-using-glob)
   - [Helm Hooks](#helm-hooks)
+  - [Handling Hooks Failures](#handling-hooks-failures)
   <!--toc:end-->
 
 We can acess the files in the `files` directory using
@@ -72,3 +73,20 @@ the hooks are executed. Lower weights are executed first.
 The `helm.sh/hook-delete-policy` annotation is used to specify when the hook
 resource are deleted.The default value is `before-hook-creation`, which means
 that the hook resource will be deleted before a new hook resource is created.
+
+## Handling Hooks Failures
+
+Currently,if a hook fails during installation or upgrade, the entire Helm
+release will be reverted to its previous state. This means that any
+resources created by the hook will be deleted, and the release will be
+rolled back to the last successful state.
+
+For the case of `post-upgrade` hooks, if the hook fails, the resources
+will be left in their current state, and the release will be rolled back.
+
+If we want to rollback the release even if the hook fails,we can
+use the following command.
+
+```bash
+helm upgrade --atomic <release-name> <chart>
+```
